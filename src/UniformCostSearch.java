@@ -3,7 +3,7 @@ import java.util.PriorityQueue;
 
 public class UniformCostSearch extends Algorithm{
     public UniformCostSearch(Map<String, Boolean> dictionary){
-        setEnglishWordsMap(dictionary);
+        setDictionary(dictionary);
         setPath(new ArrayList<>());
         setSolveStatus(false);
         setAlphabets(Constant.ALPHABETS);

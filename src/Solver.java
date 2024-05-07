@@ -4,7 +4,7 @@ import java.util.Map;
 public interface Solver {
     public void setSolveStatus(boolean status);
     public void setPath(List<String> path);
-    public void setEnglishWordsMap(Map<String, Boolean> englishWordsMap);
+    public void setDictionary(Map<String, Boolean> dictionary);
     public void setStart(String start);
     public void setGoal(String goal);
     public void setTotalVisitedNodes(int total);

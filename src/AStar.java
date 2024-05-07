@@ -4,7 +4,7 @@ import java.util.*;
 public class AStar extends Algorithm {
 
     public AStar(Map<String, Boolean> dictionary) {
-        setEnglishWordsMap(dictionary);
+        setDictionary(dictionary);
         setPath(new ArrayList<>());
         setSolveStatus(false);
         setAlphabets(Constant.ALPHABETS);

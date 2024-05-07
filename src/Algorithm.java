@@ -5,7 +5,7 @@ public class Algorithm implements Solver {
     private String start;
     private String goal;
     private List<String> path;
-    private Map<String, Boolean> englishWordsMap;
+    private Map<String, Boolean> dictionary;
     private Integer totalVisitedNodes;
     private Double timeExec;
     private char[] alphabets;
@@ -18,8 +18,8 @@ public class Algorithm implements Solver {
         this.path = path;
     }
 
-    public void setEnglishWordsMap(Map<String, Boolean> englishWordsMap){
-        this.englishWordsMap = englishWordsMap;
+    public void setDictionary(Map<String, Boolean> dictionary){
+        this.dictionary = dictionary;
     }
 
     public void setStart(String start){
@@ -53,7 +53,7 @@ public class Algorithm implements Solver {
     public void setAlphabets(char[] alphabets){this.alphabets = alphabets;}
 
     public boolean isContainKey(String nextWord){
-        return this.englishWordsMap.containsKey(nextWord);
+        return this.dictionary.containsKey(nextWord);
     }
 
     @Override
