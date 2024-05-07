@@ -4,7 +4,7 @@ import java.util.PriorityQueue;
 public class GreedyBestFirstSearch extends Algorithm{
     public GreedyBestFirstSearch(Map<String, Boolean> dictionary){
         setEnglishWordsMap(dictionary);
-        setPath(new ArrayList<String>());
+        setPath(new ArrayList<>());
         setSolveStatus(false);
     }
     private int getHeuristicCostToGoal(String currWord){

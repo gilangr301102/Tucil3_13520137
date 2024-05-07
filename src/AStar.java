@@ -5,7 +5,7 @@ import java.util.PriorityQueue;
 public class AStar extends Algorithm{
     public AStar(Map<String, Boolean> dictionary){
         setEnglishWordsMap(dictionary);
-        setPath(new ArrayList<String>());
+        setPath(new ArrayList<>());
         setSolveStatus(false);
     }
 

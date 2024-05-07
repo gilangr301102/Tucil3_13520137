@@ -127,6 +127,17 @@ public class Gui {
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setPreferredSize(new Dimension(500, 300)); // Set preferred size
 
+        // Customizing table colors
+        table.setBackground(Color.WHITE);
+        table.setForeground(Color.BLACK);
+        table.setSelectionBackground(Color.BLUE);
+        table.setSelectionForeground(Color.WHITE);
+        table.setGridColor(Color.BLACK);
+
+        // Customizing scroll pane
+        scrollPane.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        scrollPane.setBackground(Color.LIGHT_GRAY);
+
         JOptionPane.showMessageDialog(null, scrollPane, "Word Ladder Path", JOptionPane.PLAIN_MESSAGE);
     }
 
