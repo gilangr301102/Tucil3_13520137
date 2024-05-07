@@ -1,27 +1,23 @@
-public class Node implements Comparable<Node>{
+public class Node implements Comparable<Node> {
     private String word;
     private int cost;
 
-    public Node(String word, int cost){
+    public Node(String word, int cost) {
         this.word = word;
         this.cost = cost;
     }
 
     public String getWord() {
-        return this.word;
+        return word;
     }
 
-    public int getCost(){
-        return this.cost;
+    public int getCost() {
+        return cost;
     }
 
     @Override
     public int compareTo(Node other) {
-        if (this.cost == other.getCost()) {
-            return this.word.compareTo(other.getWord());
-        } else {
-            // Compare based on cost if costs are not equal
-            return Integer.compare(this.cost, other.getCost());
-        }
+        int costComparison = Integer.compare(cost, other.getCost());
+        return costComparison != 0 ? costComparison : word.compareTo(other.getWord());
     }
 }
