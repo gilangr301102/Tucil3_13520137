@@ -20,5 +20,7 @@ public interface Solver {
     public Integer getSolutionLength();
     public Double getTimeExec();
     public boolean isContainKey(String nextWord);
-    void solve(String startWord, String goalWord)  throws Exception;
+    public void solve(String startWord, String goalWord)  throws Exception;
+    public void setAlphabets(char[] alphabets);
+    public char[] getAlphabets();
 }

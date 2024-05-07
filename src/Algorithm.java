@@ -8,6 +8,7 @@ public class Algorithm implements Solver {
     private Map<String, Boolean> englishWordsMap;
     private Integer totalVisitedNodes;
     private Double timeExec;
+    private char[] alphabets;
 
     public void setSolveStatus(boolean status){
         this.isSolvable = status;
@@ -49,6 +50,8 @@ public class Algorithm implements Solver {
         this.path.clear();
     }
 
+    public void setAlphabets(char[] alphabets){this.alphabets = alphabets;}
+
     public boolean isContainKey(String nextWord){
         return this.englishWordsMap.containsKey(nextWord);
     }
@@ -61,6 +64,8 @@ public class Algorithm implements Solver {
     public boolean getIsSolvable(){
         return this.isSolvable;
     }
+
+    public char[] getAlphabets(){return this.alphabets;}
 
     public List<String> getPath(){
         return this.path;

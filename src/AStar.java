@@ -1,19 +1,21 @@
-import java.util.*;
 import java.util.PriorityQueue;
+import java.util.*;
 
+public class AStar extends Algorithm {
 
-public class AStar extends Algorithm{
-    public AStar(Map<String, Boolean> dictionary){
+    public AStar(Map<String, Boolean> dictionary) {
         setEnglishWordsMap(dictionary);
         setPath(new ArrayList<>());
         setSolveStatus(false);
+        setAlphabets(Constant.ALPHABETS);
     }
 
-    private int getHeuristicCostToGoal(String currWord){
+    private int getHeuristicCostToGoal(String currWord) {
         int ret = 0;
+        String goalWord = getGoal();
         int sz = currWord.length();
-        for(int i = 0; i<sz; i++){
-            if(currWord.charAt(i)!=getGoal().charAt(i)){
+        for (int i = 0; i < sz; i++) {
+            if (currWord.charAt(i) != goalWord.charAt(i)) {
                 ret++;
             }
         }
@@ -30,71 +32,63 @@ public class AStar extends Algorithm{
         reversePath();
     }
 
-    private void setToDefault(){
+    private void setToDefault() {
         setTotalVisitedNodes(0);
         setSolveStatus(false);
         clearPath();
     }
 
-    private long getTimeNow(){
+    private long getTimeNow() {
         return System.nanoTime();
     }
 
     public void solve(String startWord, String goalWord) throws Exception {
-        this.setToDefault();
-        this.setStart(startWord);
-        this.setGoal(goalWord);
+        setToDefault();
+        setStart(startWord);
+        setGoal(goalWord);
         long currTime = getTimeNow();
-        if(startWord.length() != goalWord.length()){
-            throw new Exception("Invalid Input (Length are not same)");
+        if (startWord.length() != goalWord.length()) {
+            throw new Exception("Invalid Input (Lengths are not the same)");
         }
 
-        this.setStart(startWord);
-        this.setGoal(goalWord);
         PriorityQueue<Node> queue = new PriorityQueue<>();
-        queue.add(new Node(startWord, this.getHeuristicCostToGoal(startWord)));
+        queue.add(new Node(startWord, getHeuristicCostToGoal(startWord)));
 
         Map<String, Integer> dist = new HashMap<>();
         dist.put(startWord, 0);
         Map<String, String> parent = new HashMap<>();
-        char[] alphabets = Constant.ALPHABETS;
-        while(!queue.isEmpty()){
-            Node curr_node = queue.poll();
-            this.incTotalVisNodes();
+        while (!queue.isEmpty()) {
+            Node currNode = queue.poll();
+            incTotalVisNodes();
 
-            if(curr_node.getWord().equals(goalWord)){
+            if (currNode.getWord().equals(goalWord)) {
                 setSolveStatus(true);
+                traverseAndReversePath(parent, startWord, goalWord);
                 break;
             }
 
-            String curr = curr_node.getWord();
-            int curr_len = curr.length();
-            for(int i = 0; i<curr_len; i++){
-                for (char alphabet : alphabets) {
+            String curr = currNode.getWord();
+            int currLen = curr.length();
+            for (int i = 0; i < currLen; i++) {
+                for (char alphabet : getAlphabets()) {
                     if (curr.charAt(i) == alphabet) continue;
-                    String next = curr.substring(0, i) + alphabet
-                            + curr.substring(i + 1);
+                    String next = curr.substring(0, i) + alphabet + curr.substring(i + 1);
                     if (isContainKey(next)) {
-                        int heuristic = this.getHeuristicCostToGoal(next);
-                        int prevCost = ((dist.get(next) != null ? dist.get(next) : 0))
-                                + heuristic;
-                        int currCost = dist.get(curr) + 1 + heuristic;
+                        int heuristic = getHeuristicCostToGoal(next);
+                        int prevCost = dist.getOrDefault(next, 0) + heuristic;
+                        int currCost = dist.getOrDefault(curr, 0) + 1 + heuristic;
                         if (prevCost <= currCost && parent.containsKey(next)) {
                             continue;
                         }
                         parent.put(next, curr);
-                        dist.put(next, dist.get(curr) + 1);
+                        dist.put(next, dist.getOrDefault(curr, 0) + 1);
                         queue.add(new Node(next, dist.get(next) + heuristic)); // f(n) = g(n) + h(n)
                     }
                 }
             }
         }
 
-        if(getIsSolvable()){
-            this.traverseAndReversePath(parent, startWord, goalWord);
-        }
-
-        Double calTime = (getTimeNow()-currTime)/1000000.0;
+        double calTime = (getTimeNow() - currTime) / 1000000.0;
         setTimeExec(calTime);
     }
 }
