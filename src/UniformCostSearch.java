@@ -10,12 +10,11 @@ public class UniformCostSearch extends Algorithm{
 
     private void traverseAndReversePath(Map<String, String> parent, String startWord, String goalWord) {
         String currWord = goalWord;
-        addWord(currWord);
-        currWord = parent.get(currWord);
         while (!Objects.equals(currWord, startWord)) {
             addWord(currWord);
             currWord = parent.get(currWord);
         }
+        addWord(currWord);
         reversePath();
     }
 
@@ -29,7 +28,7 @@ public class UniformCostSearch extends Algorithm{
         return System.nanoTime();
     }
 
-
+    @Override
     // In this case, it happened with cost equal to step, so it most like similar as BFS
     public void solve(String startWord, String goalWord) {
         this.setToDefault();

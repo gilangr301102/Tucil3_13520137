@@ -24,12 +24,11 @@ public class AStar extends Algorithm {
 
     private void traverseAndReversePath(Map<String, String> parent, String startWord, String goalWord) {
         String currWord = goalWord;
-        addWord(currWord);
-        currWord = parent.get(currWord);
         while (!Objects.equals(currWord, startWord)) {
             addWord(currWord);
             currWord = parent.get(currWord);
         }
+        addWord(currWord);
         reversePath();
     }
 
@@ -43,6 +42,7 @@ public class AStar extends Algorithm {
         return System.nanoTime();
     }
 
+    @Override
     public void solve(String startWord, String goalWord) {
         setToDefault();
         setStart(startWord);
