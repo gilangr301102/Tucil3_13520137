@@ -75,6 +75,16 @@ public class Gui {
         String goalWord = goalWordField.getText();
         int type = algorithmComboBox.getSelectedIndex() + 1; // Index starts from 0
 
+        if (startWord.isEmpty() || goalWord.isEmpty()) {
+            resultArea.setText("Start Word and Goal Word cannot be empty!");
+            return;
+        }
+
+        if (startWord.length() != goalWord.length()) {
+            resultArea.setText("Start Word and Goal Word must have the same length!");
+            return;
+        }
+
         Map<String, Boolean> dictionary = new HashMap<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(System.getProperty("user.dir") + "/test/dictionary.txt"))) {
             String line;
@@ -83,6 +93,12 @@ public class Gui {
                     dictionary.put(line, true);
                 }
             }
+
+            if (!dictionary.containsKey(startWord) || !dictionary.containsKey(goalWord)) {
+                resultArea.setText("Start Word or Goal Word not found in dictionary!");
+                return;
+            }
+
             Solver wordLadderSolver = switch (type) {
                 case 1 -> new UniformCostSearch(dictionary);
                 case 2 -> new GreedyBestFirstSearch(dictionary);
