@@ -114,7 +114,9 @@ public class Gui {
             }
             int solLength = wordLadderSolver.getSolutionLength();
             if (solLength == 0) {
-                resultArea.setText("No Solution Found!");
+                resultArea.setText("No Solution Found!\n"+
+                        "Total visited nodes: " + wordLadderSolver.getTotalVisitedNodes() + "\n" +
+                        "Time Execution: " + wordLadderSolver.getTimeExec() + " milliseconds.");
             } else {
                 resultArea.setText("Solution length: " + solLength + "\n" +
                         "Total visited nodes: " + wordLadderSolver.getTotalVisitedNodes() + "\n" +
@@ -128,10 +130,26 @@ public class Gui {
     }
 
     private void visualizePath(List<String> path) {
-        String[] columnNames = {"Word"};
+        String[] columnNames = new String[path.get(0).length()]; // Assuming all words in the path have the same length
+        for (int i = 0; i < columnNames.length; i++) {
+            columnNames[i] = "Letter " + (i + 1); // Column headers like "Letter 1", "Letter 2", etc.
+        }
         DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
+        String goalWord = path.get(path.size() - 1); // Assuming the last word in the path is the goal word
+
         for (String word : path) {
-            Object[] rowData = {word};
+            char[] chars = word.toCharArray();
+            char[] goalChars = goalWord.toCharArray();
+
+            Object[] rowData = new Object[chars.length];
+            for (int i = 0; i < chars.length; i++) {
+                char c = chars[i];
+                if (c == goalChars[i]) {
+                    rowData[i] = "<html><font color='green'>" + c + "</font></html>";
+                } else {
+                    rowData[i] = "<html><font color='red'>" + c + "</font></html>";
+                }
+            }
             tableModel.addRow(rowData);
         }
 
