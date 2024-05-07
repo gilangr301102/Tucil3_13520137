@@ -57,7 +57,7 @@ public class Algorithm implements Solver {
     }
 
     @Override
-    public void solve(String startWord, String goalWord) throws Exception {
+    public void solve(String startWord, String goalWord){
 
     }
 

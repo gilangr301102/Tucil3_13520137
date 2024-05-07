@@ -1,5 +1,4 @@
 import java.util.*;
-import java.util.PriorityQueue;
 
 public class UniformCostSearch extends Algorithm{
     public UniformCostSearch(Map<String, Boolean> dictionary){
@@ -11,11 +10,12 @@ public class UniformCostSearch extends Algorithm{
 
     private void traverseAndReversePath(Map<String, String> parent, String startWord, String goalWord) {
         String currWord = goalWord;
+        addWord(currWord);
+        currWord = parent.get(currWord);
         while (!Objects.equals(currWord, startWord)) {
             addWord(currWord);
             currWord = parent.get(currWord);
         }
-        addWord(startWord);
         reversePath();
     }
 
@@ -31,14 +31,11 @@ public class UniformCostSearch extends Algorithm{
 
 
     // In this case, it happened with cost equal to step, so it most like similar as BFS
-    public void solve(String startWord, String goalWord) throws Exception {
+    public void solve(String startWord, String goalWord) {
         this.setToDefault();
         this.setStart(startWord);
         this.setGoal(goalWord);
         long currTime = getTimeNow();
-        if(startWord.length() != goalWord.length()){
-            throw new Exception("Invalid Input (Length are not same)");
-        }
 
         Map<String, String> parent = new HashMap<>();
         Queue<String> queue = new LinkedList<>();
@@ -60,15 +57,15 @@ public class UniformCostSearch extends Algorithm{
                 int subNodeSz = curr.length();
                 for(int j = 0; j<subNodeSz; j++){
                     for (char alphabet : getAlphabets()) {
-                        if(curr.charAt(j) == alphabet) continue;
+                        if(curr.charAt(j) != alphabet){
+                            String next = curr.substring(0, j) + alphabet +
+                                    curr.substring(j + 1);
 
-                        String next = curr.substring(0, j) + alphabet +
-                                curr.substring(j + 1);
-
-                        if (isContainKey(next)
-                                && !parent.containsKey(next)) {
-                            parent.put(next,curr);
-                            queue.add(next);
+                            if (isContainKey(next)
+                                    && !parent.containsKey(next)) {
+                                parent.put(next,curr);
+                                queue.add(next);
+                            }
                         }
                     }
                 }

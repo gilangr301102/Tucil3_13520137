@@ -24,11 +24,12 @@ public class GreedyBestFirstSearch extends Algorithm {
 
     private void traverseAndReversePath(Map<String, String> parent, String startWord, String goalWord) {
         String currWord = goalWord;
+        addWord(currWord);
+        currWord = parent.get(currWord);
         while (!Objects.equals(currWord, startWord)) {
             addWord(currWord);
             currWord = parent.get(currWord);
         }
-        addWord(startWord);
         reversePath();
     }
 
@@ -42,14 +43,11 @@ public class GreedyBestFirstSearch extends Algorithm {
         return System.nanoTime();
     }
 
-    public void solve(String startWord, String goalWord) throws Exception {
+    public void solve(String startWord, String goalWord) {
         setToDefault();
         setStart(startWord);
         setGoal(goalWord);
         long currTime = getTimeNow();
-        if (startWord.length() != goalWord.length()) {
-            throw new Exception("Invalid Input (Lengths are not the same)");
-        }
 
         PriorityQueue<Node> queue = new PriorityQueue<>();
         queue.add(new Node(startWord, getHeuristicCostToGoal(startWord)));
